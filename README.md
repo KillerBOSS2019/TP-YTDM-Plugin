@@ -24,7 +24,7 @@ same as mine then after you've done all that save it
 and Reopen TouchPortal it should ask you if you want to allow
 YTDM plugin click Trust Always! And now your done with Everything
 Enjoy!
-==================-========================
+
 
 Credit: TouchPortalVLCPlugin and Python Discord
 Thanks for all the help without you i couldnt make it.
