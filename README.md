@@ -5,7 +5,7 @@ This is a plugin for [Touch Portal](https://www.touch-portal.com/)\
 This plugin is able to control and display infos about the [YTMDesktop](https://ytmdesktop.app/)
 
 # How to install
-1.Download ether Mac for [Mac]() user and [Win]() for Windows Users\
+1.Download ether Mac for [Mac](https://github.com/KillerBOSS2019/TP-YTDM-Plugin/raw/master/TP-YTMD-Mac.tpp) user and [Win](https://github.com/KillerBOSS2019/TP-YTDM-Plugin/raw/master/TP-YTMD-Win.tpp) for Windows Users\
 2.So first Make sure that you have YTMDesktop installed or else this plugin will do nothing\
 3.Now open TouchPortal and  click import Plugins then pick the file that you downloaded it should tell you Plugin has successfully installed\
 4.Next fully close TouchPortal and on Windows Press Windows + R and enter "%appdata%\TouchPortal\plugins\TouchPortalYTMusic"
