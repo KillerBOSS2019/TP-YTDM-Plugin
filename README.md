@@ -1,30 +1,29 @@
-# Touch-Portal-YTDM-Plugin
-TouchPortal YTDM Plugin
+# TP-YTDM-Plugin
 
-============--Installation--=============
-Only for windows for now Remember that
-so download Windows - YTMD Plugin.tpp
-install the plugin in TouchPortal then
-press Win+R enter %appdata%\TouchPortal\plugins\TouchPortalYTMusic
-and press ok
-then you should see Login.json
-open that with any Text editor
-ok just leave that open
-so let's get back to YTMD So in the YTMD App
-you should see Settings button next to your google account icon
-so click that Settings then go to Integrations tab
-Enable Remote control also make sure
-Protect remote control with password is also on
-You should see blue text that are like XXXXX
-type that out in the Login.json
-replace all the XXXXX with that so mine is N058Z
-so if you do everything right it would look like
-this {"Password": "N058Z"} but your password is not the
-same as mine then after you've done all that save it
-and Reopen TouchPortal it should ask you if you want to allow
-YTDM plugin click Trust Always! And now your done with Everything
-Enjoy!
-=============================================
+# What is this?
+This is a plugin for [Touch Portal](https://www.touch-portal.com/)
+This plugin is able to control and display infos about the [YTMDesktop](https://ytmdesktop.app/)
 
-Credit: TouchPortalVLCPlugin and Python Discord
-Thanks for all the help without you i couldnt make it.
+# How to install
+1.Download ether Mac for [Mac]() user and [Win]() for Windows Users
+2.So first Make sure that you have YTMDesktop installed or else this plugin will do nothing
+3.Now open TouchPortal and  click import Plugins then pick the file that you downloaded it should tell you Plugin has successfully installed
+4.Next fully close TouchPortal and on Windows Press Windows + R and enter "%appdata%\TouchPortal\plugins\TouchPortalYTMusic"
+On mac it should be in Documents folder > TouchPortal > plugins > TouchPortalYTMusic
+5.ether on Mac or Windows open the Login.json with any text editor you have
+6.Next go to YTMDesktop app Click Settings > Integrations and enable Remote control and you can have ether Protect remote control with password enable or disable
+if is disable you can skip step 7
+7.If Protect remote control with password is enabled you should able to see something like XXXXX type that out in the Login.json that you have opened
+replace XXXXX with yours or else Action will NOT WORK.
+8. save the file that you've edited it should look something like this {"Password": "MWA5Q"} AND DO NOT CHANGE ANYTHING ELSE OR ELSE IT WILL NOT WORK Just save it with XXXX Replaced as your own
+9. Now you have everything setup you should be able to reopen TouchPortal and you can click any button you should see a new Category that says "YouTube Music" If you dont that means you did something wrong if you do you should be good to go
+
+# Q&A
+Q: I Can't Follow the Guide what should i do?
+A: You can go to [TouchPortal Discord](https://discord.gg/MgxQb8r) and contect me at #ytmd
+
+Q: When will you update this again?
+A: I will be updating this Plugin Only if theres an Issue or a new action or State that user suggested or the New update of YTMDesktop app has a new functions
+
+Q: Where can i join TouchPortal Discord or YTMDesktop Discord?
+A: This is [YTMDesktop Discord](https://discord.gg/jEdRHKg7bG) and this is the [TouchPortal Discord](https://discord.gg/MgxQb8r)
