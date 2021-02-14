@@ -13,7 +13,7 @@ and a lot more! Below is an example of what it can do! Image & Page credit goes 
 ![Tab-YTMD](https://user-images.githubusercontent.com/55416314/107865596-001dec00-6e1d-11eb-8896-07fd6ee6ad9a.png)
 
 ## How to Install
-1. Download either Mac for Mac user and Win for Windows Users
+1. Download the .tpp file in release page.
 2. Make sure that you have the YTMDesktop app installed or else this plugin will not work.
 3. Open TouchPortal and click import Plugins then pick the file that you downloaded it should tell you Plugin has successfully installed.
 4. Next, fully close TouchPortal, and on Windows Start Panel, type run or press Windows+R and enter "%appdata%\TouchPortal\plugins\TouchPortalYTMusic" On mac it should be in Documents folder > TouchPortal > plugins > TouchPortalYTMusic.
