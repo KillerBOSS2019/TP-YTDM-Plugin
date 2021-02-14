@@ -1,9 +1,19 @@
 # TP-YTDM-Plugin
 
-# What is this?
+## What is this?
+This is a intergration for [TouchPortal](https://www.touch-portal.com/) it is able to
+control [Youtube Music Desktop app](https://ytmdesktop.app) suchs as\
+-- Toggle Play button\
+-- Skip current song\
+-- go to Previus song\
+-- seek forward & backword\
+-- show lyrics\
+-- Like & Dislike current song\
+-- Add to library\
+-- Add to Playlist\
+-- Volume up and down\
+And Alot More! blow is a example what it can do! Image & Page credit goes to @Arbi_ph on [TouchPortal Discord](https://discord.gg/MgxQb8r)
 ![Tab-YTMD](https://user-images.githubusercontent.com/55416314/107865596-001dec00-6e1d-11eb-8896-07fd6ee6ad9a.png)
-This is a plugin for [Touch Portal](https://www.touch-portal.com/)\
-This plugin is able to control and display infos about the [YTMDesktop](https://ytmdesktop.app/)
 
 # How to install
 1.Download ether Mac for [Mac](https://github.com/KillerBOSS2019/TP-YTDM-Plugin/raw/master/TP-YTMD-Mac.tpp) user and [Win](https://github.com/KillerBOSS2019/TP-YTDM-Plugin/raw/master/TP-YTMD-Win.tpp) for Windows Users\
