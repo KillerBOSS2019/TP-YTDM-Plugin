@@ -9,7 +9,7 @@ This is an integration for [TouchPortal](https://www.touch-portal.com/) that ena
 -- Add to library\
 -- Add to Playlist\
 -- Volume up and down\
-and a lot more! Below is an example of what it can do! Image & Page credit goes to [Arbi_ph](arbibarbarona@gmail.com)  on [TouchPortal Discord](https://discord.gg/MgxQb8r).\n
+and a lot more! Below is an example of what it can do! Image & Page credit goes to [Arbi_ph](arbibarbarona@gmail.com)  on [TouchPortal Discord](https://discord.gg/MgxQb8r).\
 ![Tab-YTMD](https://user-images.githubusercontent.com/55416314/107865596-001dec00-6e1d-11eb-8896-07fd6ee6ad9a.png)
 
 ## How to Install
