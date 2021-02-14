@@ -1,6 +1,5 @@
-# TP-YTDM-Plugin
-
-## This is an integration for [TouchPortal](https://www.touch-portal.com/) that enables control of the [Youtube Music Desktop app](https://ytmdesktop.app) such as\
+## TP-YTDM-Plugin
+This is an integration for [TouchPortal](https://www.touch-portal.com/) that enables control of the [Youtube Music Desktop app](https://ytmdesktop.app) such as
 -- Toggle Play button\
 -- Skip a current song\
 -- Go to the Previous song\
