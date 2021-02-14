@@ -1,0 +1,333 @@
+{
+  "sdk": 3,
+  "version": 103,
+  "name": "YouTube Music Desktop plugin",
+  "id": "YoutubeMusic",
+  "configuration": {
+    "colorDark": "#f54242",
+    "colorLight": "#f5a442"
+  },
+  "settings": [
+	{
+      "name": "Passcode",
+      "type": "text",
+      "default": "XXXXX",
+      "readOnly": false
+    },
+	{
+      "name": "status",
+      "type": "text",
+      "default": "YTMD is Not open",
+      "readOnly": true
+    }],
+  "plugin_start_cmd": "%TP_PLUGIN_FOLDER%TouchPortalYTMusic\\TouchPortalYTMD.exe",
+  "categories": [
+    {
+      "id": "Main",
+      "name": "YouTube Music Desktop",
+      "imagepath": "%TP_PLUGIN_FOLDER%TouchPortalYTMusic\\icon.png",
+      "actions": [
+        {
+          "id": "Play/Pause",
+          "name": "YT Music Playback Play/Pause",
+          "prefix": "plugin",
+          "type": "communicate",
+          "tryInline": true,
+          "format": "Playback {$PlayPause$} The Song",
+          "data": [
+            {
+              "id": "PlayPause",
+              "type": "choice",
+              "label": "choice",
+              "default": "Play",
+              "valueChoices": [
+                "Pause",
+                "Play"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "Next/Previous",
+          "name": "YT Music Playback Next/Previous",
+          "prefix": "plugin",
+          "type": "communicate",
+          "tryInline": true,
+          "format": "Playback {$Next&Previous$} Song",
+          "data": [
+            {
+              "id": "Next&Previous",
+              "type": "choice",
+              "label": "choice",
+              "default": "Next",
+              "valueChoices": [
+                "Previous",
+                "Next"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "Like/Dislike",
+          "name": "YT Music Control Like/Dislike",
+          "prefix": "plugin",
+          "type": "communicate",
+          "tryInline": true,
+          "format": "{$Like&Dislike$} This Song",
+          "data": [
+            {
+              "id": "Like&Dislike",
+              "type": "choice",
+              "label": "choice",
+              "default": "Like",
+              "valueChoices": [
+                "Dislike",
+                "Like"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "VUp/VDown",
+          "name": "YT Music Control Volume",
+          "prefix": "plugin",
+          "type": "communicate",
+          "tryInline": true,
+          "format": "Volume {$UPORDOWN$} by {$VolumePercent$}%",
+          "data": [
+            {
+              "id": "UPORDOWN",
+              "type": "choice",
+              "label": "choice",
+              "default": "Up",
+              "valueChoices": [
+                "Down",
+                "Up"
+              ]
+            },
+            {
+              "id": "VolumePercent",
+              "label": "Volume",
+              "type": "number",
+              "allowDecimals": false,
+              "default": "5"
+            }
+          ]
+        },
+        {
+          "id": "forward/rewind",
+          "name": "YT Music Playback seek",
+          "prefix": "plugin",
+          "type": "communicate",
+          "tryInline": true,
+          "format": "Seek {$ForwardANDRewind$} by 10 Seconds",
+          "data": [
+            {
+              "id": "ForwardANDRewind",
+              "type": "choice",
+              "label": "choice",
+              "default": "Forward",
+              "valueChoices": [
+                "Rewind",
+                "Forward"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "Repeat",
+          "name": "YT Music Playback Repeat",
+          "prefix": "plugin",
+          "type": "communicate",
+          "tryInline": true,
+          "format": "Repeat {$RepeatPic$}",
+          "data": [
+            {
+              "id": "RepeatPic",
+              "type": "choice",
+              "label": "choice",
+              "default": "OFF",
+              "valueChoices": [
+                "All",
+                "ONE",
+                "OFF"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "AddtoThis",
+          "name": "YT Music add Track to Playlist",
+          "prefix": "plugin",
+          "type": "communicate",
+          "tryInline": true,
+          "format": "Add {$Library$} to Playlist",
+          "data": [
+            {
+              "id": "Library",
+              "label": "Library",
+              "type": "text",
+              "default": ""
+            }
+          ]
+        },
+        {
+          "id": "SetSeekBar",
+          "name": "YT Music Playback Set seek",
+          "prefix": "plugin",
+          "type": "communicate",
+          "tryInline": true,
+          "format": "Set Seek to {$SetSeek$}Seconds",
+          "data": [
+            {
+              "id": "SetSeek",
+              "label": "SetSeek",
+              "type": "number",
+              "allowDecimals": false,
+              "default": "0"
+            }
+          ]
+        },
+        {
+          "id": "SetVolume",
+          "name": "YT Music Playback Set Volume",
+          "prefix": "plugin",
+          "type": "communicate",
+          "tryInline": true,
+          "format": "Set Volume to{$SetVolume$}%",
+          "data": [
+            {
+              "id": "SetVolume",
+              "label": "SetVolume",
+              "type": "number",
+              "allowDecimals": false,
+              "default": "0"
+            }
+          ]
+        },
+        {
+          "id": "PlayTrack",
+          "name": "YT Music Play Track",
+          "prefix": "plugin",
+          "type": "communicate",
+          "tryInline": true,
+          "format": "Play Track{$PlayTrackNumber$}",
+          "data": [
+            {
+              "id": "PlayTrackNumber",
+              "label": "PlayTrack",
+              "type": "number",
+              "allowDecimals": false,
+              "default": "1"
+            }
+          ]
+        },
+        {
+          "id": "AddLibrary",
+          "name": "YT Music Add to Library",
+          "prefix": "YT Music",
+          "type": "communicate"
+        },
+        {
+          "id": "Shuffle",
+          "prefix": "YT Music",
+          "name": "YT Music Playback Shuffle",
+          "type": "communicate"
+        }
+      ],
+      "events": [],
+      "states": [
+        {
+          "id": "PlayerTitle",
+          "type": "text",
+          "desc": "YT Music Song Title",
+          "default": "0"
+        },
+        {
+          "id": "Playercover",
+          "type": "text",
+          "desc": "YT Music Cover Art",
+          "default": "0"
+        },
+        {
+          "id": "Trackauthor",
+          "type": "text",
+          "desc": "YT Music Song Author",
+          "default": "0"
+        },
+        {
+          "id": "Trackalbum",
+          "type": "text",
+          "desc": "YT Music Current Album",
+          "default": "0"
+        },
+        {
+          "id": "PlayerhasSong",
+          "type": "text",
+          "desc": "YT Music is Playing Song",
+          "default": "0"
+        },
+        {
+          "id": "PlayerisPaused",
+          "type": "text",
+          "desc": "YT Music Play/Pause State",
+          "default": "0"
+        },
+        {
+          "id": "PlayerVPercent",
+          "type": "text",
+          "desc": "YT Music Current Volume",
+          "default": "0"
+        },
+        {
+          "id": "Trackdurationhuman",
+          "type": "text",
+          "desc": "YT Music Song Length",
+          "default": "0"
+        },
+        {
+          "id": "Trackcurrentdurationhuman",
+          "type": "text",
+          "desc": "YT Music Current Song Pos",
+          "default": "0"
+        },
+        {
+          "id": "PlayerCurrentSonglikeState",
+          "type": "text",
+          "desc": "YT Music Current Like State",
+          "default": "0"
+        },
+        {
+          "id": "TrackCurrentLyrics",
+          "type": "text",
+          "desc": "YT Music Lyrics",
+          "default": "0"
+        },
+        {
+          "id": "isAdvertisement",
+          "type": "text",
+          "desc": "YT Music AD State",
+          "default": "False"
+        },
+        {
+          "id": "SeekBarStatus",
+          "type": "text",
+          "desc": "YT Music Seek Status",
+          "default": "False"
+        },
+        {
+          "id": "Inlibrary",
+          "type": "text",
+          "desc": "YT Music Is in library",
+          "default": "False"
+        },
+		{
+		  "id": "repeatType",
+		  "type": "text",
+		  "desc": "YT Music Repeat States",
+		  "default": "None"
+		}
+      ]
+    }
+  ]
+}
