@@ -36,5 +36,3 @@ You can go to [TouchPortal Discord](https://discord.gg/MgxQb8r) and contact [! x
 ## When will you update this again?
 I will be updating this Plugin only if there's an issue or a new action or State that users suggested, or YTMDesktop app has updated its functions
 
-## Where can I join YTM Desktop Discord or TouchPortal Discord?
-[YTM Desktop Discord](https://discord.gg/jEdRHKg7bG) and [TouchPortal Discord](https://discord.gg/MgxQb8r)
