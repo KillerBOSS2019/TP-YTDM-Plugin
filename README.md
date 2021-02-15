@@ -36,3 +36,13 @@ You can go to [TouchPortal Discord](https://discord.gg/MgxQb8r) and contact [! x
 ## When will you update this again?
 I will be updating this Plugin only if there's an issue or a new action or State that users suggested, or YTMDesktop app has updated its functions
 
+## Where can I join YTM Desktop Discord or TouchPortal Discord?
+[YTM Desktop Discord](https://discord.gg/jEdRHKg7bG) and [TouchPortal Discord](https://discord.gg/MgxQb8r)
+
+## Where can I join TouchPortal Discord or YTMDesktop Discord?
+A: This is [YTMDesktop Discord](https://discord.gg/jEdRHKg7bG) and this is the [TouchPortal Discord](https://discord.gg/MgxQb8r)
+
+## Library i've used for this project
+- socket (to communicate with TouchPortal App)
+- requests (to get data from YTMD Api)
+- base64 (To send image file to TouchPortal)
