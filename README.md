@@ -33,3 +33,9 @@ A: I will be updating this Plugin only if there's an issue or a new action or St
 
 Q: Where can I join TouchPortal Discord or YTMDesktop Discord?
 A: This is [YTMDesktop Discord](https://discord.gg/jEdRHKg7bG) and this is the [TouchPortal Discord](https://discord.gg/MgxQb8r)
+
+## Library i've used for this project
+- socket (to communicate with TouchPortal App)
+- requests (to get data from YTMD Api)
+- base64 (To send image file to TouchPortal)
+
