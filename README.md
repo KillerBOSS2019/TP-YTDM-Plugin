@@ -3,7 +3,7 @@ This is an integration for [TouchPortal](https://www.touch-portal.com/) that ena
 - Toggle Play button
 - Skip a current song
 - Go to the Previous song
-- Seek forward & backward
+- Seek forward & backwardg
 - Show lyrics
 - Like & Dislike the current song
 - Add to library
