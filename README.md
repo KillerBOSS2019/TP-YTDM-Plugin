@@ -11,7 +11,7 @@ This is an integration for [TouchPortal](https://www.touch-portal.com/) that ena
 - Add to library
 - Add to Playlist
 - Volume up and down
-and a lot more! Below is an example of what it can do! Image & Page credit goes to [Arbi_ph](arbibarbarona@gmail.com)  on [TouchPortal Discord](https://discord.gg/MgxQb8r).
+and a lot more! Below is an example of what it can do!
 
 ![Tab-YTMD](https://user-images.githubusercontent.com/55416314/107865596-001dec00-6e1d-11eb-8896-07fd6ee6ad9a.png)
 
@@ -27,23 +27,3 @@ Thanks for TP have build in syst it's much easier
 And find your other PC's IPv4 address to find them open CMD and enter `ipconfig`
 Enter the IPv4 address to the main PC YTMD plugin settings and make sure to
 Also get other pcs passcode as well
-
-If you enjoy this plugin please Star it and put it on watch list :D
-
-# Q&A
-## I can't follow the guide, What should I do?
-You can go to [TouchPortal Discord](https://discord.gg/MgxQb8r) and contact [! xXKiller_BOSSXx#5232](https://discord.com/users/526656592481878026) in the `#ytmd` channel
-
-## When will you update this again?
-I will be updating this Plugin only if there's an issue or a new action or State that users suggested, or YTMDesktop app has updated its functions
-
-## Where can I join YTM Desktop Discord or TouchPortal Discord?
-[YTM Desktop Discord](https://discord.gg/jEdRHKg7bG) and [TouchPortal Discord](https://discord.gg/MgxQb8r)
-
-## Where can I join TouchPortal Discord or YTMDesktop Discord?
-A: This is [YTMDesktop Discord](https://discord.gg/jEdRHKg7bG) and this is the [TouchPortal Discord](https://discord.gg/MgxQb8r)
-
-## Library i've used for this project
-- socket (to communicate with TouchPortal App)
-- requests (to get data from YTMD Api)
-- base64 (To send image file to TouchPortal)
