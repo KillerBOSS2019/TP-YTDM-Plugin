@@ -77,4 +77,7 @@ This is an integration for [TouchPortal](https://www.touch-portal.com/) that All
 `beta` There is Some features that is under testing If your willing to test it Change it to `True` Default is `False`
 `Lyrics Range` in order to use This it requires you to enable `beta`. This is used for Scrolling Lyrics default is `-5,5` -5 means how far past it will go and 5 means how many newer lyrics going to show so `-5,5` will have 10 lines of Lyrics `[-5, -4, -3, -2, -1, 0, 1, 2 ,3 ,4]`. Suggesting max of 30 lines of lyrics the More lyrics line the longer it will update
 `Check for Update` Default True, When is True it will check for new version If new version is here it will open a browser window to the New version. Change to `False` If you do not want to check updates and open browser window.
-`Status` This Shows if Youtube Music Desktop is open or not
+`Status` This Shows if Youtube Music Desktop is open or not.
+
+## Info
+If there is any Issues/Suggestions or anything feel free make new Issue In this Github Or you can email me!
