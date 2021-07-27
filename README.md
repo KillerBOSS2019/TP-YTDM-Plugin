@@ -7,6 +7,7 @@
     - [States](#states)
     - [Events](#events)
   - [Installation Guide](#installation)
+  - [Settings Overview](#settings)
   - [Info](#info)
 
 ## Description
@@ -63,6 +64,17 @@ This is an integration for [TouchPortal](https://www.touch-portal.com/) that All
 - and Goto Integrations and Enable `Remote control`
 
 ![image](https://user-images.githubusercontent.com/55416314/127077944-2b6d8191-1bcb-42cf-a98b-0e4482dcece3.png)
-- and Then let's head over to TouchPortal Settings. Type the password from YTMD from `Protect remote control with password` should be in blue color into Passcode entry in the TouchPortal settings
+- and Then let's head over to TouchPortal Settings. Type the password from YTMD from `Protect remote control with password` (Should be in blue color) in `Passcode` entry in the TouchPortal YouTube Music Desktop Plugin settings.
 
 ![image](https://user-images.githubusercontent.com/55416314/127078060-a5d97850-fd19-42cd-b0ae-24f8c833bf56.png)
+
+
+## Settings
+![image](https://user-images.githubusercontent.com/55416314/127078450-16860430-91d1-4fb5-87db-080ccd23f0be.png)
+
+`IPv4 address` This allows you to control Other PC running YTMD Default `localhost` means your own PC
+`Passcode` This is used for authorization to communicate YTMD
+`beta` There is Some features that is under testing If your willing to test it Change it to `True` Default is `False`
+`Lyrics Range` in order to use This it requires you to enable `beta`. This is used for Scrolling Lyrics default is `-5,5` -5 means how far past it will go and 5 means how many newer lyrics going to show so `-5,5` will have 10 lines of Lyrics `[-5, -4, -3, -2, -1, 0, 1, 2 ,3 ,4]`. Suggesting max of 30 lines of lyrics the More lyrics line the longer it will update
+`Check for Update` Default True, When is True it will check for new version If new version is here it will open a browser window to the New version. Change to `False` If you do not want to check updates and open browser window.
+`Status` This Shows if Youtube Music Desktop is open or not
