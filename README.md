@@ -2,7 +2,7 @@
 ## TouchPortal Youtube Music Desktop Plugin
 - [TouchPortal YTMD Plugin](#touchportal-youtube-musicdesktopplugin)
   - [Description](#description)
-  - [Action/States/Events](#Action/States/Events)
+  - [Action/States/Events](#actionstatesevents)
     - [Action](#action)
     - [States](#states)
     - [Events](#events)
