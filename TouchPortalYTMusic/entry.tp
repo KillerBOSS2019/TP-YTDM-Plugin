@@ -1,6 +1,6 @@
 {
   "sdk": 3,
-  "version": 250,
+  "version": 210,
   "name": "YouTube Music Desktop plugin",
   "id": "YoutubeMusic",
   "configuration": {
