@@ -1,0 +1,448 @@
+{
+  "sdk": 3,
+  "version": 250,
+  "name": "YouTube Music Desktop plugin",
+  "id": "YoutubeMusic",
+  "configuration": {
+    "colorDark": "#f54242",
+    "colorLight": "#f5a442"
+  },
+  "settings": [
+	{
+      "name": "IPv4 address",
+      "type": "text",
+      "default": "localhost",
+      "readOnly": false
+    },
+	{
+      "name": "Passcode",
+      "type": "text",
+      "default": "XXXXX",
+      "readOnly": false
+    },
+	{
+      "name": "beta",
+      "type": "text",
+      "default": "False",
+      "readOnly": false
+    },
+	{
+      "name": "Lyrics Range",
+      "type": "text",
+      "default": "-5, 5",
+      "readOnly": false
+    },
+	{
+      "name": "Check for Update",
+      "type": "text",
+      "default": "True",
+      "readOnly": false
+    },
+	{
+      "name": "status",
+      "type": "text",
+      "default": "YTMD is Not open",
+      "readOnly": true
+    }],
+  "plugin_start_cmd": "%TP_PLUGIN_FOLDER%TouchPortalYTMusic\\TPYTMD.exe",
+  "categories": [
+    {
+      "id": "Main",
+      "name": "YouTube Music Desktop",
+      "imagepath": "%TP_PLUGIN_FOLDER%TouchPortalYTMusic\\icon.png",
+      "actions": [
+        {
+          "id": "KillerBOSS.TouchPortal.Plugin.YTMD.Action.Play/Pause",
+          "name": "YT Music Playback Play/Pause",
+          "prefix": "plugin",
+          "type": "communicate",
+          "tryInline": true,
+          "format": "Playback {$KillerBOSS.TouchPortal.Plugin.YTMD.Action.Play/Pause.Choice$} The Song",
+          "data": [
+            {
+              "id": "KillerBOSS.TouchPortal.Plugin.YTMD.Action.Play/Pause.Choice",
+              "type": "choice",
+              "label": "choice",
+              "default": "Play",
+              "valueChoices": [
+                "Pause",
+                "Play"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "KillerBOSS.TouchPortal.Plugin.YTMD.Action.Next/Previous",
+          "name": "YT Music Playback Next/Previous",
+          "prefix": "plugin",
+          "type": "communicate",
+          "tryInline": true,
+          "format": "Playback {$KillerBOSS.TouchPortal.Plugin.YTMD.Action.Next/Previous.Choice$} Song",
+          "data": [
+            {
+              "id": "KillerBOSS.TouchPortal.Plugin.YTMD.Action.Next/Previous.Choice",
+              "type": "choice",
+              "label": "choice",
+              "default": "Next",
+              "valueChoices": [
+                "Previous",
+                "Next"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "KillerBOSS.TouchPortal.Plugin.YTMD.Action.Like/Dislike",
+          "name": "YT Music Control Like/Dislike",
+          "prefix": "plugin",
+          "type": "communicate",
+          "tryInline": true,
+          "format": "{$KillerBOSS.TouchPortal.Plugin.YTMD.Action.Like/Dislike.Choice$} This Song",
+          "data": [
+            {
+              "id": "KillerBOSS.TouchPortal.Plugin.YTMD.Action.Like/Dislike.Choice",
+              "type": "choice",
+              "label": "choice",
+              "default": "Like",
+              "valueChoices": [
+                "Dislike",
+                "Like"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "KillerBOSS.TouchPortal.Plugin.YTMD.Action.VUp/VDown",
+          "name": "YT Music Control Volume",
+          "prefix": "plugin",
+          "type": "communicate",
+          "tryInline": true,
+          "format": "Volume {$KillerBOSS.TouchPortal.Plugin.YTMD.Action.VUp/VDown.Choice$}",
+          "data": [
+            {
+              "id": "KillerBOSS.TouchPortal.Plugin.YTMD.Action.VUp/VDown.Choice",
+              "type": "choice",
+              "label": "choice",
+              "default": "Up",
+              "valueChoices": [
+                "Down",
+                "Up"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "KillerBOSS.TouchPortal.Plugin.YTMD.Action.mute/unmute",
+          "name": "YT Music Mute/Unmute",
+          "prefix": "plugin",
+          "type": "communicate",
+          "tryInline": true,
+          "format": "{$KillerBOSS.TouchPortal.Plugin.YTMD.Action.mute/unmute.Choice$} YT Music Desktop",
+          "data": [
+            {
+              "id": "KillerBOSS.TouchPortal.Plugin.YTMD.Action.mute/unmute.Choice",
+              "type": "choice",
+              "label": "choice",
+              "default": "Mute",
+              "valueChoices": [
+                "Unmute",
+                "Mute"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "KillerBOSS.TouchPortal.Plugin.YTMD.Action.forward/rewind",
+          "name": "YT Music Playback seek",
+          "prefix": "plugin",
+          "type": "communicate",
+          "tryInline": true,
+          "format": "Seek {$KillerBOSS.TouchPortal.Plugin.YTMD.Action.forward/rewind.Choice$} by 10 Seconds",
+          "data": [
+            {
+              "id": "KillerBOSS.TouchPortal.Plugin.YTMD.Action.forward/rewind.Choice",
+              "type": "choice",
+              "label": "choice",
+              "default": "Forward",
+              "valueChoices": [
+                "Rewind",
+                "Forward"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "KillerBOSS.TouchPortal.Plugin.YTMD.Action.RepeatPic",
+          "name": "YT Music Playback Repeat",
+          "prefix": "plugin",
+          "type": "communicate",
+          "tryInline": true,
+          "format": "Repeat {$KillerBOSS.TouchPortal.Plugin.YTMD.Action.RepeatPic.Choice$}",
+          "data": [
+            {
+              "id": "KillerBOSS.TouchPortal.Plugin.YTMD.Action.RepeatPic.Choice",
+              "type": "choice",
+              "label": "choice",
+              "default": "OFF",
+              "valueChoices": [
+                "All",
+                "ONE",
+                "OFF"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "KillerBOSS.TouchPortal.Plugin.YTMD.Action.AddToPlaylist",
+          "name": "YT Music add Current Track to Playlist",
+          "prefix": "plugin",
+          "type": "communicate",
+          "tryInline": true,
+          "format": "Add current Song to {$KillerBOSS.TouchPortal.Plugin.YTMD.Action.AddToPlaylist.Value$}",
+          "data": [
+            {
+              "id": "KillerBOSS.TouchPortal.Plugin.YTMD.Action.AddToPlaylist.Value",
+              "label": "Playlist",
+              "type": "choice",
+              "default": "",
+              "valueChoices": []
+            }
+          ]
+        },
+        {
+          "id": "KillerBOSS.TouchPortal.Plugin.YTMD.Action.SetSeekBar",
+          "name": "YT Music Playback Set seek",
+          "prefix": "plugin",
+          "type": "communicate",
+          "tryInline": true,
+          "format": "Set Seek to {$KillerBOSS.TouchPortal.Plugin.YTMD.Action.SetSeekBar.Value$}Seconds",
+          "data": [
+            {
+              "id": "KillerBOSS.TouchPortal.Plugin.YTMD.Action.SetSeekBar.Value",
+              "label": "SetSeek",
+              "type": "number",
+              "allowDecimals": false,
+              "default": "0"
+            }
+          ]
+        },
+        {
+          "id": "KillerBOSS.TouchPortal.Plugin.YTMD.Action.SetVolume",
+          "name": "YT Music Playback Set Volume",
+          "prefix": "plugin",
+          "type": "communicate",
+          "tryInline": true,
+          "format": "Set Volume to{$KillerBOSS.TouchPortal.Plugin.YTMD.Action.SetVolume.Volume$}%",
+          "data": [
+            {
+              "id": "KillerBOSS.TouchPortal.Plugin.YTMD.Action.SetVolume.Volume",
+              "label": "SetVolume",
+              "type": "number",
+              "allowDecimals": false,
+              "default": "0"
+            }
+          ]
+        },
+        {
+          "id": "KillerBOSS.TouchPortal.Plugin.YTMD.Action.PlayTrackNumber",
+          "name": "YT Music Play Track",
+          "prefix": "plugin",
+          "type": "communicate",
+          "tryInline": true,
+          "format": "Play Track{$KillerBOSS.TouchPortal.Plugin.YTMD.Action.PlayTrackNumber.Index$}",
+          "data": [
+            {
+              "id": "KillerBOSS.TouchPortal.Plugin.YTMD.Action.PlayTrackNumber.Index",
+              "label": "PlayTrack",
+              "type": "number",
+              "allowDecimals": false,
+              "default": "1"
+            }
+          ]
+        },
+        {
+          "id": "KillerBOSS.TouchPortal.Plugin.YTMD.Action.AddToLibrary",
+          "name": "YT Music Add to Library",
+          "prefix": "YT Music",
+          "format": "Add current Song to Library",
+          "type": "communicate"
+        },
+        {
+          "id": "KillerBOSS.TouchPortal.Plugin.YTMD.Action.Shuffle",
+          "prefix": "YT Music",
+          "name": "YT Music Playback Shuffle",
+          "format": "Shuffle Current playlist",
+          "type": "communicate"
+        }
+      ],
+      "events": [
+        {
+          "id":"KillerBOSS.TouchPortal.Plugin.YTMD.Events.isPaused",
+          "name":"YT Music is Paused",
+          "format":"When YT Music is Paused $val",
+          "type":"communicate",
+          "valueType":"choice",
+          "valueChoices": [
+            "True",
+            "False"
+          ],
+          "valueStateId":"KillerBOSS.TouchPortal.Plugin.YTMD.States.PlayerisPaused"
+        },
+        {
+          "id":"KillerBOSS.TouchPortal.Plugin.YTMD.Events.SongLikeState",
+          "name":"YT Music Song like States",
+          "format":"When YT Music Song like states is $val",
+          "type":"communicate",
+          "valueType":"choice",
+          "valueChoices": [
+            "INDIFFERENT",
+            "LIKE",
+            "DISLIKE"
+          ],
+          "valueStateId":"KillerBOSS.TouchPortal.Plugin.YTMD.States.PlayerCurrentSonglikeState"
+        },
+        {
+          "id":"KillerBOSS.TouchPortal.Plugin.YTMD.Events.isAdvertisement",
+          "name":"YT Music is Advertisement",
+          "format":"When YT Music has Advertisement $val",
+          "type":"communicate",
+          "valueType":"choice",
+          "valueChoices": [
+            "True",
+            "False"
+          ],
+          "valueStateId":"KillerBOSS.TouchPortal.Plugin.YTMD.States.isAdvertisement"
+        },
+        {
+          "id":"KillerBOSS.TouchPortal.Plugin.YTMD.Events.repeatType",
+          "name":"YT Music Repeat states",
+          "format":"When YT Music Repeat states changes to $val",
+          "type":"communicate",
+          "valueType":"choice",
+          "valueChoices": [
+            "ALL",
+            "ONE",
+            "NONE"
+          ],
+          "valueStateId":"KillerBOSS.TouchPortal.Plugin.YTMD.States.repeatType"
+        }
+      ],
+      "states": [
+        {
+          "id": "KillerBOSS.TouchPortal.Plugin.YTMD.States.PlayerTitle",
+          "type": "text",
+          "desc": "YT Music Song Title",
+          "default": "None"
+        },
+        {
+          "id": "KillerBOSS.TouchPortal.Plugin.YTMD.States.Playercover",
+          "type": "text",
+          "desc": "YT Music Cover Art",
+          "default": "None"
+        },
+        {
+          "id": "KillerBOSS.TouchPortal.Plugin.YTMD.States.Trackauthor",
+          "type": "text",
+          "desc": "YT Music Song Author",
+          "default": "None"
+        },
+        {
+          "id": "KillerBOSS.TouchPortal.Plugin.YTMD.States.Trackalbum",
+          "type": "text",
+          "desc": "YT Music Current Album",
+          "default": "None"
+        },
+        {
+          "id": "KillerBOSS.TouchPortal.Plugin.YTMD.States.PlayerhasSong",
+          "type": "text",
+          "desc": "YT Music is Playing Song",
+          "default": "False"
+        },
+        {
+          "id": "KillerBOSS.TouchPortal.Plugin.YTMD.States.PlayerisPaused",
+          "type": "text",
+          "desc": "YT Music Play/Pause State",
+          "default": "True"
+        },
+        {
+          "id": "KillerBOSS.TouchPortal.Plugin.YTMD.States.PlayerVPercent",
+          "type": "text",
+          "desc": "YT Music Current Volume",
+          "default": "0"
+        },
+        {
+          "id": "KillerBOSS.TouchPortal.Plugin.YTMD.States.Trackdurationhuman",
+          "type": "text",
+          "desc": "YT Music Song Length",
+          "default": "0"
+        },
+        {
+          "id": "KillerBOSS.TouchPortal.Plugin.YTMD.States.PreviousSong.title",
+          "type": "text",
+          "desc": "YT Music Previous Song title",
+          "default": "None"
+        },
+        {
+          "id": "KillerBOSS.TouchPortal.Plugin.YTMD.States.PreviousSong.author",
+          "type": "text",
+          "desc": "YT Music Previous Song Author",
+          "default": "None"
+        },
+        {
+          "id": "KillerBOSS.TouchPortal.Plugin.YTMD.States.Next.title",
+          "type": "text",
+          "desc": "YT Music Next Song title",
+          "default": "None"
+        },
+        {
+          "id": "KillerBOSS.TouchPortal.Plugin.YTMD.States.Next.author",
+          "type": "text",
+          "desc": "YT Music Next Song Author",
+          "default": "None"
+        },
+        {
+          "id": "KillerBOSS.TouchPortal.Plugin.YTMD.States.Trackcurrentdurationhuman",
+          "type": "text",
+          "desc": "YT Music Current Song Pos",
+          "default": "00:00"
+        },
+        {
+          "id": "KillerBOSS.TouchPortal.Plugin.YTMD.States.PlayerCurrentSonglikeState",
+          "type": "text",
+          "desc": "YT Music Current Like State",
+          "default": "INDIFFERENT"
+        },
+        {
+          "id": "KillerBOSS.TouchPortal.Plugin.YTMD.States.TrackCurrentLyrics",
+          "type": "text",
+          "desc": "YT Music Lyrics",
+          "default": "None"
+        },
+        {
+          "id": "KillerBOSS.TouchPortal.Plugin.YTMD.States.isAdvertisement",
+          "type": "text",
+          "desc": "YT Music Is Advertisement",
+          "default": "False"
+        },
+        {
+          "id": "KillerBOSS.TouchPortal.Plugin.YTMD.States.SeekBarStatus",
+          "type": "text",
+          "desc": "YT Music Seek Status",
+          "default": "0"
+        },
+        {
+          "id": "KillerBOSS.TouchPortal.Plugin.YTMD.States.Inlibrary",
+          "type": "text",
+          "desc": "YT Music Is Current Song in Library",
+          "default": "False"
+        },
+		    {
+		      "id": "KillerBOSS.TouchPortal.Plugin.YTMD.States.repeatType",
+		      "type": "text",
+		      "desc": "YT Music Repeat States",
+		      "default": "NONE"
+		   }
+      ]
+    }
+  ]
+}
