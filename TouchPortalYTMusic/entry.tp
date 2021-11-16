@@ -1,6 +1,6 @@
 {
   "sdk": 3,
-  "version": 210,
+  "version": 211,
   "name": "YouTube Music Desktop plugin",
   "id": "YoutubeMusic",
   "configuration": {
@@ -441,7 +441,7 @@
 		      "type": "text",
 		      "desc": "YT Music Repeat States",
 		      "default": "NONE"
-		   }
+		    }
       ]
     }
   ]

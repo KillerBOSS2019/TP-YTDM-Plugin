@@ -47,7 +47,7 @@ def YTMD_Actions(command,value=None, showdata=True):
 TPClient = TouchPortalAPI.Client("YoutubeMusic")
 
 oldPlaylist = []
-oldMusicTitle = None
+oldMusicTitle = (None, -1)
 lyricsClock = 0
 totalTimewait = 0
 HiddenLyrics = False
@@ -55,7 +55,6 @@ globalVol = 0
 def stateUpdate():
     global oldPlaylist, isYTMDRunning, Timer, oldMusicTitle, HiddenLyrics
     Timer = threading.Timer(0.23, stateUpdate)
-    Timer.start()
     try:
         statesData = json.loads(http.request("GET", f"http://{YTMD_server}:9863/query", headers={"Authorization": f"bearer {LoginPass}"}).data.decode("utf-8"))
         isYTMDRunning = True
@@ -70,14 +69,15 @@ def stateUpdate():
         TPClient.settingUpdate("status", "YTMD is Open")
         currentPlaylist = json.loads(http.request("GET", f"http://{YTMD_server}:9863/query/playlist", headers={"Authorization": f"bearer {LoginPass}"}).data.decode("utf-8"))['list']
         queryQueue = json.loads(http.request("GET", f"http://{YTMD_server}:9863/query/queue", headers={"Authorization": f"bearer {LoginPass}"}).data.decode("utf-8"))
-        TPClient.stateUpdate("KillerBOSS.TouchPortal.Plugin.YTMD.States.Playercover", base64.b64encode(requests.get(statesData['track']['cover']).content).decode('utf-8'))
         Lyricsdata = json.loads(http.request("GET", f"http://{YTMD_server}:9863/query/lyrics", headers={"Authorization": f"bearer {LoginPass}"}).data.decode("utf-8"))
         TPClient.stateUpdate("KillerBOSS.TouchPortal.Plugin.YTMD.States.TrackCurrentLyrics", Lyricsdata["data"])
         if oldPlaylist != currentPlaylist:
             oldPlaylist = currentPlaylist
             TPClient.choiceUpdate("KillerBOSS.TouchPortal.Plugin.YTMD.Action.AddToPlaylist.Value", oldPlaylist)
-        if oldMusicTitle != statesData['track']['title']:
-            oldMusicTitle = statesData['track']['title']
+        if statesData['track']['title'] != oldMusicTitle[0] or oldMusicTitle[1] != queryQueue['currentIndex']:
+            oldMusicTitle = (statesData['track']['title'], queryQueue['currentIndex']);
+            #print(oldMusicTitle, statesData['track']['title'])
+            TPClient.stateUpdate("KillerBOSS.TouchPortal.Plugin.YTMD.States.Playercover", base64.b64encode(requests.get(statesData['track']['cover']).content).decode('utf-8'))
             if isBeta:
                 YTMD_Actions("show-lyrics-hidden", showdata=False)
                 HiddenLyrics = True
@@ -216,6 +216,7 @@ def stateUpdate():
             pass
     else:
         TPClient.settingUpdate("Status", "YTMD is Not open")
+    Timer.start();
 Timer = threading.Timer(0.23, stateUpdate)
 
 @TPClient.on(TYPES.onConnect)
