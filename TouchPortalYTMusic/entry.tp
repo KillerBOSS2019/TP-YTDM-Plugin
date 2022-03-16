@@ -1,5 +1,5 @@
 {
-  "sdk": 3,
+  "sdk": 4,
   "version": 211,
   "name": "YouTube Music Desktop plugin",
   "id": "YoutubeMusic",
@@ -50,6 +50,13 @@
       "id": "Main",
       "name": "YouTube Music Desktop",
       "imagepath": "%TP_PLUGIN_FOLDER%TouchPortalYTMusic\\icon.png",
+      "connectors": [
+        {       
+          "id": "KillerBOSS.TP.Plugins.YTMD.connectors.APPcontrol",
+          "name": "YTMD Volume Slider",
+          "format": "Control volume for YTM App"
+        }
+      ],
       "actions": [
         {
           "id": "KillerBOSS.TouchPortal.Plugin.YTMD.Action.Play/Pause",
@@ -259,6 +266,46 @@
               "default": "1"
             }
           ]
+        },
+        {
+          "id": "KillerBOSS.TouchPortal.Plugin.YTMD.Action.StartPlaylist",
+          "name": "YT Music Start playlist",
+          "prefix": "plugin",
+          "type": "communicate",
+          "tryInline": true,
+          "format": "Start {$KillerBOSS.TouchPortal.Plugin.YTMD.Action.StartPlaylist.playlistName$} playlist",
+          "data": [
+            {
+              "id": "KillerBOSS.TouchPortal.Plugin.YTMD.Action.StartPlaylist.playlistName",
+              "label": "StartPlaylist",
+              "type": "choice",
+              "default": "",
+              "valueChoices": []
+            }
+          ]
+        },
+        {
+          "id": "KillerBOSS.TouchPortal.Plugin.YTMD.Action.PlayURL",
+          "name": "YT Music Play URL",
+          "prefix": "plugin",
+          "type": "communicate",
+          "tryInline": true,
+          "format": "Play {$KillerBOSS.TouchPortal.Plugin.YTMD.Action.PlayURL.URL$}",
+          "data": [
+            {
+              "id": "KillerBOSS.TouchPortal.Plugin.YTMD.Action.PlayURL.URL",
+              "label": "StartPlaylist",
+              "type": "text",
+              "default": ""
+            }
+          ]
+        },
+        {
+          "id": "KillerBOSS.TouchPortal.Plugin.YTMD.Action.SkiAd",
+          "prefix": "YT Music",
+          "name": "YT Music Skip Ad",
+          "format": "Skip ad (If button pops up)",
+          "type": "communicate"
         },
         {
           "id": "KillerBOSS.TouchPortal.Plugin.YTMD.Action.AddToLibrary",

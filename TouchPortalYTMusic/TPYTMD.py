@@ -72,8 +72,11 @@ def stateUpdate():
         Lyricsdata = json.loads(http.request("GET", f"http://{YTMD_server}:9863/query/lyrics", headers={"Authorization": f"bearer {LoginPass}"}).data.decode("utf-8"))
         TPClient.stateUpdate("KillerBOSS.TouchPortal.Plugin.YTMD.States.TrackCurrentLyrics", Lyricsdata["data"])
         if oldPlaylist != currentPlaylist:
+            print("Updating playlist")
             oldPlaylist = currentPlaylist
             TPClient.choiceUpdate("KillerBOSS.TouchPortal.Plugin.YTMD.Action.AddToPlaylist.Value", oldPlaylist)
+            TPClient.choiceUpdate("KillerBOSS.TouchPortal.Plugin.YTMD.Action.StartPlaylist.playlistName", oldPlaylist)
+
         if statesData['track']['title'] != oldMusicTitle[0] or oldMusicTitle[1] != queryQueue['currentIndex']:
             oldMusicTitle = (statesData['track']['title'], queryQueue['currentIndex']);
             #print(oldMusicTitle, statesData['track']['title'])
@@ -116,11 +119,11 @@ def stateUpdate():
                 [
                     {
                         "id": "KillerBOSS.TouchPortal.Plugin.YTMD.States.PreviousSong.title",
-                        "value": queryQueue['list'][queryQueue['currentIndex']-1]['title']
+                        "value": str(queryQueue['list'][queryQueue['currentIndex']-1]['title'])
                     },
                     {
                         "id": "KillerBOSS.TouchPortal.Plugin.YTMD.States.PreviousSong.author",
-                        "value": queryQueue['list'][queryQueue['currentIndex']-1]['author']
+                        "value": str(queryQueue['list'][queryQueue['currentIndex']-1]['author'])
                     }
                 ]
             )
@@ -132,11 +135,11 @@ def stateUpdate():
                     [
                         {
                             "id": "KillerBOSS.TouchPortal.Plugin.YTMD.States.Next.title",
-                            "value": queryQueue['list'][queryQueue['currentIndex']+1]['title']
+                            "value": str(queryQueue['list'][queryQueue['currentIndex']+1]['title'])
                         },
                         {
                             "id": "KillerBOSS.TouchPortal.Plugin.YTMD.States.Next.author",
-                            "value": queryQueue['list'][queryQueue['currentIndex']+1]['author']
+                            "value": str(queryQueue['list'][queryQueue['currentIndex']+1]['author'])
                         }
                     ]
                 )
@@ -160,15 +163,15 @@ def stateUpdate():
                 [
                     {
                         "id": "KillerBOSS.TouchPortal.Plugin.YTMD.States.PlayerTitle",
-                        "value": statesData['track']['title']
+                        "value": str(statesData['track']['title'])
                     },
                     {
                         "id": "KillerBOSS.TouchPortal.Plugin.YTMD.States.Trackauthor",
-                        "value": statesData['track']['author']
+                        "value": str(statesData['track']['author'])
                     },
                     {
                         "id": "KillerBOSS.TouchPortal.Plugin.YTMD.States.Trackalbum",
-                        "value": statesData['track']['album']
+                        "value": str(statesData['track']['album'])
                     },
                     {
                         "id": "KillerBOSS.TouchPortal.Plugin.YTMD.States.PlayerhasSong",
@@ -210,8 +213,8 @@ def stateUpdate():
                         "id": "KillerBOSS.TouchPortal.Plugin.YTMD.States.repeatType",
                         "value": statesData['player']['repeatType']
                     }
-                ]
-            )
+                ])
+            TPClient.connectorUpdate("KillerBOSS.TP.Plugins.YTMD.connectors.APPcontrol", TPClient.currentStates['KillerBOSS.TouchPortal.Plugin.YTMD.States.PlayerVPercent'])
         except:
             pass
     else:
@@ -315,6 +318,17 @@ def Actions(data):
             YTMD_Actions("player-add-library")
         if data['actionId'] == "KillerBOSS.TouchPortal.Plugin.YTMD.Action.Shuffle":
             YTMD_Actions("player-shuffle")    
+
+        if data['actionId'] == "KillerBOSS.TouchPortal.Plugin.YTMD.Action.StartPlaylist":
+            YTMD_Actions("start-playlist", data['data'][0]['value'])
+        if data['actionId'] == "KillerBOSS.TouchPortal.Plugin.YTMD.Action.PlayURL":
+            YTMD_Actions("play-url", data['data'][0]['value'])
+        if data['actionId'] == "KillerBOSS.TouchPortal.Plugin.YTMD.Action.SkiAd":
+            YTMD_Actions("skip-ad")
+@TPClient.on(TYPES.onConnectorChange)
+def connectorManager(data):
+    if data['connectorId'] == "KillerBOSS.TP.Plugins.YTMD.connectors.APPcontrol" and isYTMDRunning:
+        YTMD_Actions("player-set-volume", data['value'])
 
 @TPClient.on(TYPES.onShutdown)
 def Disconnect(data): 
