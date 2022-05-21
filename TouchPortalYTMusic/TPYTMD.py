@@ -2,7 +2,7 @@ import base64
 import json
 import os
 import threading
-from time import strftime
+from time import sleep, strftime
 import TouchPortalAPI
 import urllib3
 from TouchPortalAPI import TYPES
@@ -17,6 +17,7 @@ lyricsStatesList = []
 statesData = ""
 http = urllib3.PoolManager(num_pools=10)
 isYTMDRunning = False
+running = False
 
 def createDebug():
     if os.path.isfile("./log.txt"):
@@ -52,181 +53,188 @@ lyricsClock = 0
 totalTimewait = 0
 HiddenLyrics = False
 globalVol = 0
+connectionStatus = False
 def stateUpdate():
     global oldPlaylist, isYTMDRunning, Timer, oldMusicTitle, HiddenLyrics
-    Timer = threading.Timer(0.23, stateUpdate)
-    try:
-        statesData = json.loads(http.request("GET", f"http://{YTMD_server}:9863/query", headers={"Authorization": f"bearer {LoginPass}"}).data.decode("utf-8"))
-        isYTMDRunning = True
-    except Exception as e:
-        if "refused" in str(e).split():
-            isYTMDRunning = False
-        else:
-            isYTMDRunning = False
-            print(e)
-    global lyricsClock, totalTimewait
-    if isYTMDRunning:
-        TPClient.settingUpdate("status", "YTMD is Open")
-        currentPlaylist = json.loads(http.request("GET", f"http://{YTMD_server}:9863/query/playlist", headers={"Authorization": f"bearer {LoginPass}"}).data.decode("utf-8"))['list']
-        queryQueue = json.loads(http.request("GET", f"http://{YTMD_server}:9863/query/queue", headers={"Authorization": f"bearer {LoginPass}"}).data.decode("utf-8"))
-        Lyricsdata = json.loads(http.request("GET", f"http://{YTMD_server}:9863/query/lyrics", headers={"Authorization": f"bearer {LoginPass}"}).data.decode("utf-8"))
-        TPClient.stateUpdate("KillerBOSS.TouchPortal.Plugin.YTMD.States.TrackCurrentLyrics", Lyricsdata["data"])
-        if oldPlaylist != currentPlaylist:
-            print("Updating playlist")
-            oldPlaylist = currentPlaylist
-            TPClient.choiceUpdate("KillerBOSS.TouchPortal.Plugin.YTMD.Action.AddToPlaylist.Value", oldPlaylist)
-            TPClient.choiceUpdate("KillerBOSS.TouchPortal.Plugin.YTMD.Action.StartPlaylist.playlistName", oldPlaylist)
-
-        if statesData['track']['title'] != oldMusicTitle[0] or oldMusicTitle[1] != queryQueue['currentIndex']:
-            oldMusicTitle = (statesData['track']['title'], queryQueue['currentIndex']);
-            #print(oldMusicTitle, statesData['track']['title'])
-            TPClient.stateUpdate("KillerBOSS.TouchPortal.Plugin.YTMD.States.Playercover", base64.b64encode(requests.get(statesData['track']['cover']).content).decode('utf-8'))
-            if isBeta:
-                YTMD_Actions("show-lyrics-hidden", showdata=False)
-                HiddenLyrics = True
-            lyricsClock = 0
-            totalTimewait = 0
-        def get5Line(Lyrics, currentindex):
-            lyrics = []
-            def line(line, x):
-                try:
-                    if x >= 0:
-                        lyrics.append(Lyrics[x])
-                    else:
-                        lyrics.append(" ")
-                except (KeyError, IndexError):
-                    lyrics.append(" ")
-            
-            for lyricsIndex in range(int(lyricsRange[0]), int(lyricsRange[1])):
-                line(Lyrics, currentindex+lyricsIndex)
-            return lyrics
-
-        def updateLyrics(index):
-            lyrics = get5Line(Lyricsdata['data'].split("\n"), index)
-            for lyricsState, lyric in zip(lyricsStatesList, lyrics):
-                TPClient.stateUpdate(lyricsState, lyric)
-        timeBetween =  statesData['track']['duration']/len(Lyricsdata['data'].split("\n"))
-
-        if timeBetween > 0.23:
-            if not statesData['player']['isPaused'] and not statesData['track']['isAdvertisement'] and Lyricsdata['hasLoaded']:
-                totalTimewait += 0.23
-                if totalTimewait >= timeBetween:
-                    lyricsClock += 1
-                    totalTimewait = 0
-                    updateLyrics(lyricsClock)
+    global lyricsClock, totalTimewait, connectionStatus
+    while running:
         try:
-            TPClient.stateUpdateMany(
-                [
-                    {
-                        "id": "KillerBOSS.TouchPortal.Plugin.YTMD.States.PreviousSong.title",
-                        "value": str(queryQueue['list'][queryQueue['currentIndex']-1]['title'])
-                    },
-                    {
-                        "id": "KillerBOSS.TouchPortal.Plugin.YTMD.States.PreviousSong.author",
-                        "value": str(queryQueue['list'][queryQueue['currentIndex']-1]['author'])
-                    }
-                ]
-            )
-        except:
-            pass
-        try:
-            if queryQueue['currentIndex']+1 < len(queryQueue['list'])-1:
-                TPClient.stateUpdateMany(
-                    [
-                        {
-                            "id": "KillerBOSS.TouchPortal.Plugin.YTMD.States.Next.title",
-                            "value": str(queryQueue['list'][queryQueue['currentIndex']+1]['title'])
-                        },
-                        {
-                            "id": "KillerBOSS.TouchPortal.Plugin.YTMD.States.Next.author",
-                            "value": str(queryQueue['list'][queryQueue['currentIndex']+1]['author'])
-                        }
-                    ]
-                )
+            statesData = json.loads(http.request("GET", f"http://{YTMD_server}:9863/query", headers={"Authorization": f"bearer {LoginPass}"}).data.decode("utf-8"))
+            currentPlaylist = json.loads(http.request("GET", f"http://{YTMD_server}:9863/query/playlist", headers={"Authorization": f"bearer {LoginPass}"}).data.decode("utf-8"))['list']
+            queryQueue = json.loads(http.request("GET", f"http://{YTMD_server}:9863/query/queue", headers={"Authorization": f"bearer {LoginPass}"}).data.decode("utf-8"))
+            Lyricsdata = json.loads(http.request("GET", f"http://{YTMD_server}:9863/query/lyrics", headers={"Authorization": f"bearer {LoginPass}"}).data.decode("utf-8"))
+            isYTMDRunning = True
+            if connectionStatus != isYTMDRunning:
+                print("Connected to YTMD")
+                connectionStatus = isYTMDRunning
+        except Exception as e:
+            if "refused" in str(e).split():
+                isYTMDRunning = False
             else:
+                isYTMDRunning = False
+            if connectionStatus != isYTMDRunning:
+                print("YTMD Server shutdown")
+                connectionStatus = isYTMDRunning
+            TPClient.settingUpdate("Status", "YTMD is Not open")
+        if isYTMDRunning:
+            TPClient.settingUpdate("status", "YTMD is Open")
+            TPClient.stateUpdate("KillerBOSS.TouchPortal.Plugin.YTMD.States.TrackCurrentLyrics", Lyricsdata["data"])
+            if oldPlaylist != currentPlaylist:
+                print("Updating playlist")
+                oldPlaylist = currentPlaylist
+                TPClient.choiceUpdate("KillerBOSS.TouchPortal.Plugin.YTMD.Action.AddToPlaylist.Value", oldPlaylist)
+                TPClient.choiceUpdate("KillerBOSS.TouchPortal.Plugin.YTMD.Action.StartPlaylist.playlistName", oldPlaylist)
+
+            if statesData['track']['title'] != oldMusicTitle[0] or oldMusicTitle[1] != queryQueue['currentIndex']:
+                oldMusicTitle = (statesData['track']['title'], queryQueue['currentIndex']);
+                #print(oldMusicTitle, statesData['track']['title'])
+                if statesData['track']['cover']:
+                    TPClient.stateUpdate("KillerBOSS.TouchPortal.Plugin.YTMD.States.Playercover", base64.b64encode(requests.get(statesData['track']['cover']).content).decode('utf-8'))
+                if isBeta:
+                    YTMD_Actions("show-lyrics-hidden", showdata=False)
+                    HiddenLyrics = True
+                lyricsClock = 0
+                totalTimewait = 0
+            def get5Line(Lyrics, currentindex):
+                lyrics = []
+                def line(line, x):
+                    try:
+                        if x >= 0:
+                            lyrics.append(Lyrics[x])
+                        else:
+                            lyrics.append(" ")
+                    except (KeyError, IndexError):
+                        lyrics.append(" ")
+                
+                for lyricsIndex in range(int(lyricsRange[0]), int(lyricsRange[1])):
+                    line(Lyrics, currentindex+lyricsIndex)
+                return lyrics
+
+            def updateLyrics(index):
+                lyrics = get5Line(Lyricsdata['data'].split("\n"), index)
+                for lyricsState, lyric in zip(lyricsStatesList, lyrics):
+                    TPClient.stateUpdate(lyricsState, lyric)
+            timeBetween =  statesData['track']['duration']/len(Lyricsdata['data'].split("\n"))
+
+            if timeBetween > 0.23:
+                if not statesData['player']['isPaused'] and not statesData['track']['isAdvertisement'] and Lyricsdata['hasLoaded']:
+                    totalTimewait += 0.23
+                    if totalTimewait >= timeBetween:
+                        lyricsClock += 1
+                        totalTimewait = 0
+                        updateLyrics(lyricsClock)
+            try:
                 TPClient.stateUpdateMany(
                     [
                         {
-                            "id": "KillerBOSS.TouchPortal.Plugin.YTMD.States.Next.title",
-                            "value": "Unknown"
+                            "id": "KillerBOSS.TouchPortal.Plugin.YTMD.States.PreviousSong.title",
+                            "value": str(queryQueue['list'][queryQueue['currentIndex']-1]['title'])
                         },
                         {
-                            "id": "KillerBOSS.TouchPortal.Plugin.YTMD.States.Next.title",
-                            "value": "Unknown"
+                            "id": "KillerBOSS.TouchPortal.Plugin.YTMD.States.PreviousSong.author",
+                            "value": str(queryQueue['list'][queryQueue['currentIndex']-1]['author'])
                         }
                     ]
                 )
-        except:
-            pass
-        try:
-            TPClient.stateUpdateMany(
-                [
-                    {
-                        "id": "KillerBOSS.TouchPortal.Plugin.YTMD.States.PlayerTitle",
-                        "value": str(statesData['track']['title'])
-                    },
-                    {
-                        "id": "KillerBOSS.TouchPortal.Plugin.YTMD.States.Trackauthor",
-                        "value": str(statesData['track']['author'])
-                    },
-                    {
-                        "id": "KillerBOSS.TouchPortal.Plugin.YTMD.States.Trackalbum",
-                        "value": str(statesData['track']['album'])
-                    },
-                    {
-                        "id": "KillerBOSS.TouchPortal.Plugin.YTMD.States.PlayerhasSong",
-                        "value": str(statesData['player']['hasSong'])
-                    },
-                    {
-                        "id": "KillerBOSS.TouchPortal.Plugin.YTMD.States.PlayerisPaused",
-                        "value": str(statesData['player']['isPaused'])
-                    },
-                    {
-                        "id": "KillerBOSS.TouchPortal.Plugin.YTMD.States.PlayerVPercent",
-                        "value": str(statesData['player']['volumePercent'])
-                    },
-                    {
-                        "id": "KillerBOSS.TouchPortal.Plugin.YTMD.States.Trackdurationhuman",
-                        "value": str(statesData['track']['durationHuman'])
-                    },
-                    {
-                        "id": "KillerBOSS.TouchPortal.Plugin.YTMD.States.Trackcurrentdurationhuman",
-                        "value": str(statesData['player']['seekbarCurrentPositionHuman'])
-                    },
-                    {
-                        "id": "KillerBOSS.TouchPortal.Plugin.YTMD.States.PlayerCurrentSonglikeState",
-                        "value": str(statesData['player']['likeStatus'])
-                    },
-                    {
-                        "id": "KillerBOSS.TouchPortal.Plugin.YTMD.States.isAdvertisement",
-                        "value": str(statesData['track']['isAdvertisement'])
-                    },
-                    {
-                        "id": "KillerBOSS.TouchPortal.Plugin.YTMD.States.SeekBarStatus",
-                        "value": str(round(statePercent*100)) if isinstance((statePercent := statesData['player']['statePercent']), float) else 0
-                    },
-                    {
-                        "id": "KillerBOSS.TouchPortal.Plugin.YTMD.States.Inlibrary",
-                        "value": statesData['track']['inLibrary']
-                    },
-                    {
-                        "id": "KillerBOSS.TouchPortal.Plugin.YTMD.States.repeatType",
-                        "value": statesData['player']['repeatType']
-                    }
-                ])
-            TPClient.connectorUpdate("KillerBOSS.TP.Plugins.YTMD.connectors.APPcontrol", TPClient.currentStates['KillerBOSS.TouchPortal.Plugin.YTMD.States.PlayerVPercent'])
-        except:
-            pass
-    else:
-        TPClient.settingUpdate("Status", "YTMD is Not open")
-    Timer.start();
-Timer = threading.Timer(0.23, stateUpdate)
+            except:
+                pass
+            try:
+                if queryQueue['currentIndex']+1 < len(queryQueue['list'])-1:
+                    TPClient.stateUpdateMany(
+                        [
+                            {
+                                "id": "KillerBOSS.TouchPortal.Plugin.YTMD.States.Next.title",
+                                "value": str(queryQueue['list'][queryQueue['currentIndex']+1]['title'])
+                            },
+                            {
+                                "id": "KillerBOSS.TouchPortal.Plugin.YTMD.States.Next.author",
+                                "value": str(queryQueue['list'][queryQueue['currentIndex']+1]['author'])
+                            }
+                        ]
+                    )
+                else:
+                    TPClient.stateUpdateMany(
+                        [
+                            {
+                                "id": "KillerBOSS.TouchPortal.Plugin.YTMD.States.Next.title",
+                                "value": "Unknown"
+                            },
+                            {
+                                "id": "KillerBOSS.TouchPortal.Plugin.YTMD.States.Next.title",
+                                "value": "Unknown"
+                            }
+                        ]
+                    )
+            except:
+                pass
+            try:
+                TPClient.stateUpdateMany(
+                    [
+                        {
+                            "id": "KillerBOSS.TouchPortal.Plugin.YTMD.States.PlayerTitle",
+                            "value": str(statesData['track']['title'])
+                        },
+                        {
+                            "id": "KillerBOSS.TouchPortal.Plugin.YTMD.States.Trackauthor",
+                            "value": str(statesData['track']['author'])
+                        },
+                        {
+                            "id": "KillerBOSS.TouchPortal.Plugin.YTMD.States.Trackalbum",
+                            "value": str(statesData['track']['album'])
+                        },
+                        {
+                            "id": "KillerBOSS.TouchPortal.Plugin.YTMD.States.PlayerhasSong",
+                            "value": str(statesData['player']['hasSong'])
+                        },
+                        {
+                            "id": "KillerBOSS.TouchPortal.Plugin.YTMD.States.PlayerisPaused",
+                            "value": str(statesData['player']['isPaused'])
+                        },
+                        {
+                            "id": "KillerBOSS.TouchPortal.Plugin.YTMD.States.PlayerVPercent",
+                            "value": str(statesData['player']['volumePercent'])
+                        },
+                        {
+                            "id": "KillerBOSS.TouchPortal.Plugin.YTMD.States.Trackdurationhuman",
+                            "value": str(statesData['track']['durationHuman'])
+                        },
+                        {
+                            "id": "KillerBOSS.TouchPortal.Plugin.YTMD.States.Trackcurrentdurationhuman",
+                            "value": str(statesData['player']['seekbarCurrentPositionHuman'])
+                        },
+                        {
+                            "id": "KillerBOSS.TouchPortal.Plugin.YTMD.States.PlayerCurrentSonglikeState",
+                            "value": str(statesData['player']['likeStatus'])
+                        },
+                        {
+                            "id": "KillerBOSS.TouchPortal.Plugin.YTMD.States.isAdvertisement",
+                            "value": str(statesData['track']['isAdvertisement'])
+                        },
+                        {
+                            "id": "KillerBOSS.TouchPortal.Plugin.YTMD.States.SeekBarStatus",
+                            "value": str(round(statePercent*100)) if isinstance((statePercent := statesData['player']['statePercent']), float) else 0
+                        },
+                        {
+                            "id": "KillerBOSS.TouchPortal.Plugin.YTMD.States.Inlibrary",
+                            "value": statesData['track']['inLibrary']
+                        },
+                        {
+                            "id": "KillerBOSS.TouchPortal.Plugin.YTMD.States.repeatType",
+                            "value": statesData['player']['repeatType']
+                        }
+                    ])
+                TPClient.connectorUpdate("KillerBOSS.TP.Plugins.YTMD.connectors.APPcontrol", TPClient.currentStates['KillerBOSS.TouchPortal.Plugin.YTMD.States.PlayerVPercent'])
+            except:
+                pass
+        sleep(0.23)
 
 @TPClient.on(TYPES.onConnect)
 def onConnect(data):
     global YTMD_server, LoginPass, isBeta, lyricsRange, lyricsStatesList
+    global running
     print(data)
     createDebug()
+    running = True
     
     YTMD_server = data['settings'][0]['IPv4 address']
     LoginPass = data['settings'][1]['Passcode']
@@ -241,8 +249,8 @@ def onConnect(data):
     for x in range(int(lyricsRange[0]), int(lyricsRange[1])):
         TPClient.createState("KillerBOSS.TP.Plugin.YTMD.States.ScrollLyrics.Line"+str(x), "Scrolling Lyrics Show line "+str(x), "")
         lyricsStatesList.append("KillerBOSS.TP.Plugin.YTMD.States.ScrollLyrics.Line"+str(x))
-    print("Connecting to", YTMD_server+":9863/query", "With passcode:", LoginPass)
-    stateUpdate()
+    print("Trying to Connect to", YTMD_server+":9863/query", "With passcode:", LoginPass)
+    threading.Thread(target=stateUpdate).start()
 
 @TPClient.on(TYPES.onAction)
 def Actions(data):
@@ -325,6 +333,7 @@ def Actions(data):
             YTMD_Actions("play-url", data['data'][0]['value'])
         if data['actionId'] == "KillerBOSS.TouchPortal.Plugin.YTMD.Action.SkiAd":
             YTMD_Actions("skip-ad")
+
 @TPClient.on(TYPES.onConnectorChange)
 def connectorManager(data):
     if data['connectorId'] == "KillerBOSS.TP.Plugins.YTMD.connectors.APPcontrol" and isYTMDRunning:
@@ -332,7 +341,8 @@ def connectorManager(data):
 
 @TPClient.on(TYPES.onShutdown)
 def Disconnect(data): 
-    Timer.cancel()
+    global running
+    running = False
     try:
         TPClient.disconnect()
     except (ConnectionResetError,AttributeError):
