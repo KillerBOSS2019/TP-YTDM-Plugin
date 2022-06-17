@@ -32,6 +32,6 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repos_token: ${{ secrets.REPO_TOKEN }}
-          filename: *.tpp
+          file: TPYTMD_v*.tpp
           overwrite: true
           file_glob: true
