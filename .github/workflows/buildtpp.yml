@@ -8,9 +8,6 @@ jobs:
     strategy:
       matrix:
         os: [windows-latest, macos-latest, linux-latest]
-    defaults:
-      run:
-        working-directory: ./TouchPortalYTMusic
 
     steps:
       - uses: actions/checkout@v3
@@ -27,11 +24,11 @@ jobs:
           
       - name: Build tpp using tppbuild
         run: |
-          python3 build.py
+          python3 ./TouchPortalYTMusic/build.py
       - name: uploading tpp for ${{ matrix.os}}
         uses: svenstaro/upload-release-action@v2
         with:
-          repos_token: ${{ secrets.REPO_TOKEN }}
+          repo: ${{ secrets.REPO_TOKEN }}
           file: TPYTMD_v*.tpp
           overwrite: true
           file_glob: true
