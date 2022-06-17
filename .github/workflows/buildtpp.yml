@@ -28,7 +28,10 @@ jobs:
       - name: Build tpp using tppbuild
         run: |
           python3 build.py
-      - uses: actions/upload-artifact@v3
+      - name: uploading tpp for ${{ matrix.os}}
+        uses: svenstaro/upload-release-action@v2
         with:
-          name: TPYTMD_v*.tpp
-          path: .
+          repos_token: ${{ secrets.REPO_TOKEN }}
+          filename: *.tpp
+          overwrite: true
+          file_glob: true
