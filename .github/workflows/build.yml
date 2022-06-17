@@ -28,7 +28,6 @@ jobs:
           python3 build.py
       - uses: actions/upload-artifact@v3
         with:
-          name: build
-          path: *.tpp
+          name: *.tpp
 
       
