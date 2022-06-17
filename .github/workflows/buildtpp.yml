@@ -28,7 +28,7 @@ jobs:
       - name: uploading tpp for ${{ matrix.os}}
         uses: svenstaro/upload-release-action@v2
         with:
-          repo: ${{ secrets.REPO_TOKEN }}
-          file: TPYTMD_v*.tpp
+          repo_token: ${{ secrets.REPO_TOKEN }}
+          file: ./TouchPortalYTMusic/*.tpp
           overwrite: true
           file_glob: true
