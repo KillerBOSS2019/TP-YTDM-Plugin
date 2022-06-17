@@ -247,7 +247,7 @@ def onConnect(data):
         #print(lyricsRange)
     print(list(range(int(lyricsRange[0]), int(lyricsRange[1]))))
     for x in range(int(lyricsRange[0]), int(lyricsRange[1])):
-        TPClient.createState("KillerBOSS.TP.Plugin.YTMD.States.ScrollLyrics.Line"+str(x), "Scrolling Lyrics Show line "+str(x), "")
+        TPClient.createState("KillerBOSS.TP.Plugin.YTMD.States.ScrollLyrics.Line"+str(x), "Scrolling Lyrics Show line "+str(x), "", "Lyrics line")
         lyricsStatesList.append("KillerBOSS.TP.Plugin.YTMD.States.ScrollLyrics.Line"+str(x))
     print("Trying to Connect to", YTMD_server+":9863/query", "With passcode:", LoginPass)
     threading.Thread(target=stateUpdate).start()
