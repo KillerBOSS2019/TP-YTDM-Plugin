@@ -1,5 +1,5 @@
 {
-  "sdk": 4,
+  "sdk": 6,
   "version": 212,
   "name": "YouTube Music Desktop plugin",
   "id": "YoutubeMusic",
@@ -45,11 +45,12 @@
       "readOnly": true
     }],
   "plugin_start_cmd": "%TP_PLUGIN_FOLDER%TouchPortalYTMusic\\TPYTMD.exe",
+  "plugin_start_cmd_mac": "%TP_PLUGIN_FOLDER%TouchPortalYTMusic//start.sh TPYTMD",
   "categories": [
     {
       "id": "Main",
       "name": "YouTube Music Desktop",
-      "imagepath": "%TP_PLUGIN_FOLDER%TouchPortalYTMusic\\icon.png",
+      "imagepath": "%TP_PLUGIN_FOLDER%TouchPortalYTMusic//icon.png",
       "connectors": [
         {       
           "id": "KillerBOSS.TP.Plugins.YTMD.connectors.APPcontrol",
