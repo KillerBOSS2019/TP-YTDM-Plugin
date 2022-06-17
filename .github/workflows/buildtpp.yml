@@ -23,7 +23,7 @@ jobs:
         run: |
           python3 -m pip install --upgrade pip
           pip3 install pyinstaller
-          pip3 install https://github.com/KillerBOSS2019/TouchPortal-API/archive/refs/heads/tppdoc.zip
+          pip3 install requirements.txt
           
       - name: Build tpp using tppbuild
         run: |
