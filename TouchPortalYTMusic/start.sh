@@ -1,6 +1,8 @@
-prog=$1
+#!/bin/sh
 
-chmod +x prog
+prog=TPYTMD
+
+chmod +x TPYTMD
 
 pid=`ps -ef | grep -v grep | grep -i "\./${prog}" | awk '{print $2}'`
 

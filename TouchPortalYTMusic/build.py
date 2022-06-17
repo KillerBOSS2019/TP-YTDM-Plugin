@@ -16,5 +16,7 @@ PLUGIN_ICON = "icon.png"
 
 PLUGIN_VERSION = "2.1.2"
 
+ADDITIONAL_FILES = ["start.sh"]
+
 if __name__ == "__main__":
     runBuild()

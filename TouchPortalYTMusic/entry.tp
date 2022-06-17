@@ -44,8 +44,9 @@
       "default": "YTMD is Not open",
       "readOnly": true
     }],
-  "plugin_start_cmd": "%TP_PLUGIN_FOLDER%TouchPortalYTMusic\\TPYTMD.exe",
-  "plugin_start_cmd_mac": "%TP_PLUGIN_FOLDER%TouchPortalYTMusic//start.sh TPYTMD",
+  "plugin_start_cmd_windows": "%TP_PLUGIN_FOLDER%TouchPortalYTMusic\\TPYTMD.exe",
+  "plugin_start_cmd_mac": "sh %TP_PLUGIN_FOLDER%TouchPortalYTMusic//start.sh TPYTMD",
+  "plugin_start_cmd_linux": "sh %TP_PLUGIN_FOLDER%TouchPortalYTMusic//start.sh TPYTMD",
   "categories": [
     {
       "id": "Main",
