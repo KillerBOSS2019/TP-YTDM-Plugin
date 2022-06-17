@@ -15,16 +15,20 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Run build on ${{ matrix.os }}
+
         uses: actions/setup-python@v1
         with:
-          python-version: "3.10"
+          python-version: 3.10
+
       - name: Install dependencies
         run: |
           python3 -m pip install --upgrade pip
+          pip install pyinstaller
           pip3 install -r requirements.txt
-      - name: Build
+      - name: Build tpp using tppbuild
         run: |
           python3 build.py
+      - name: uploading .tpp to github
       - uses: actions/upload-artifact@v3
         with:
           name: TPYTMD_v*.tpp

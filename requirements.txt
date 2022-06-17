@@ -1,2 +1,1 @@
-pyinstaller
 https://github.com/KillerBOSS2019/TouchPortal-API/archive/refs/heads/tppdoc.zip
