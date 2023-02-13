@@ -1,4 +1,5 @@
 import base64
+import zlib
 import json
 import os
 import threading
@@ -89,7 +90,7 @@ def stateUpdate():
                 oldMusicTitle = (statesData['track']['title'], queryQueue['currentIndex']);
                 #print(oldMusicTitle, statesData['track']['title'])
                 if statesData['track']['cover']:
-                    TPClient.stateUpdate("KillerBOSS.TouchPortal.Plugin.YTMD.States.Playercover", base64.b64encode(requests.get(statesData['track']['cover']).content).decode('utf-8'))
+                    TPClient.stateUpdate("KillerBOSS.TouchPortal.Plugin.YTMD.States.Playercover", base64.b64encode(zlib.compress(requests.get(statesData['track']['cover']).content)).decode('utf-8'))
                 if isBeta:
                     YTMD_Actions("show-lyrics-hidden", showdata=False)
                     HiddenLyrics = True
