@@ -1,6 +1,6 @@
 {
   "sdk": 6,
-  "version": 212,
+  "version": 220,
   "name": "YouTube Music Desktop plugin",
   "id": "YoutubeMusic",
   "configuration": {
@@ -21,21 +21,9 @@
       "readOnly": false
     },
 	{
-      "name": "beta",
-      "type": "text",
-      "default": "False",
-      "readOnly": false
-    },
-	{
       "name": "Lyrics Range",
       "type": "text",
       "default": "-5, 5",
-      "readOnly": false
-    },
-	{
-      "name": "Check for Update",
-      "type": "text",
-      "default": "True",
       "readOnly": false
     },
 	{
@@ -280,9 +268,8 @@
             {
               "id": "KillerBOSS.TouchPortal.Plugin.YTMD.Action.StartPlaylist.playlistName",
               "label": "StartPlaylist",
-              "type": "choice",
-              "default": "",
-              "valueChoices": []
+              "type": "text",
+              "default": ""
             }
           ]
         },
@@ -303,7 +290,7 @@
           ]
         },
         {
-          "id": "KillerBOSS.TouchPortal.Plugin.YTMD.Action.SkiAd",
+          "id": "KillerBOSS.TouchPortal.Plugin.YTMD.Action.SkipAd",
           "prefix": "YT Music",
           "name": "YT Music Skip Ad",
           "format": "Skip ad (If button pops up)",

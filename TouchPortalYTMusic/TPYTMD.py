@@ -11,7 +11,6 @@ from sys import exit
 
 YTMD_server = "localhost"
 LoginPass = None
-isBeta = False
 lyricsRange = [-5, 5]
 lyricsStatesList = []
 statesData = ""
@@ -19,17 +18,6 @@ http = urllib3.PoolManager(num_pools=10)
 isYTMDRunning = False
 running = False
 
-def createDebug():
-    if os.path.isfile("./log.txt"):
-        os.remove("log.txt")
-        
-    print('log file has been created')
-    Logfile = open('log.txt', 'w')
-    currenttime = (strftime('[%I:%M:%S:%p] '))
-    Logfile.write("log file created At: "+currenttime)
-    Logfile.write('\n')
-    Logfile.write('--------------------------------------------\n')
-    Logfile.close()
 def writeServerData(Serverinfo):
     currenttime = (strftime('[%I:%M:%S:%p] '))
     logfile = open('log.txt', 'a')
@@ -83,16 +71,12 @@ def stateUpdate():
                 print("Updating playlist")
                 oldPlaylist = currentPlaylist
                 TPClient.choiceUpdate("KillerBOSS.TouchPortal.Plugin.YTMD.Action.AddToPlaylist.Value", oldPlaylist)
-                TPClient.choiceUpdate("KillerBOSS.TouchPortal.Plugin.YTMD.Action.StartPlaylist.playlistName", oldPlaylist)
 
             if statesData['track']['title'] != oldMusicTitle[0] or oldMusicTitle[1] != queryQueue['currentIndex']:
                 oldMusicTitle = (statesData['track']['title'], queryQueue['currentIndex']);
                 #print(oldMusicTitle, statesData['track']['title'])
                 if statesData['track']['cover']:
                     TPClient.stateUpdate("KillerBOSS.TouchPortal.Plugin.YTMD.States.Playercover", base64.b64encode(requests.get(statesData['track']['cover']).content).decode('utf-8'))
-                if isBeta:
-                    YTMD_Actions("show-lyrics-hidden", showdata=False)
-                    HiddenLyrics = True
                 lyricsClock = 0
                 totalTimewait = 0
             def get5Line(Lyrics, currentindex):
@@ -192,7 +176,7 @@ def stateUpdate():
                         },
                         {
                             "id": "KillerBOSS.TouchPortal.Plugin.YTMD.States.PlayerVPercent",
-                            "value": str(statesData['player']['volumePercent'])
+                            "value": str(int(statesData['player']['volumePercent']))
                         },
                         {
                             "id": "KillerBOSS.TouchPortal.Plugin.YTMD.States.Trackdurationhuman",
@@ -216,33 +200,29 @@ def stateUpdate():
                         },
                         {
                             "id": "KillerBOSS.TouchPortal.Plugin.YTMD.States.Inlibrary",
-                            "value": statesData['track']['inLibrary']
+                            "value": str(statesData['track']['inLibrary'])
                         },
                         {
                             "id": "KillerBOSS.TouchPortal.Plugin.YTMD.States.repeatType",
-                            "value": statesData['player']['repeatType']
+                            "value": str(statesData['player']['repeatType'])
                         }
                     ])
-                TPClient.connectorUpdate("KillerBOSS.TP.Plugins.YTMD.connectors.APPcontrol", TPClient.currentStates['KillerBOSS.TouchPortal.Plugin.YTMD.States.PlayerVPercent'])
+                TPClient.connectorUpdate("KillerBOSS.TP.Plugins.YTMD.connectors.APPcontrol", int(TPClient.currentStates['KillerBOSS.TouchPortal.Plugin.YTMD.States.PlayerVPercent']))
             except:
                 pass
         sleep(0.23)
 
 @TPClient.on(TYPES.onConnect)
 def onConnect(data):
-    global YTMD_server, LoginPass, isBeta, lyricsRange, lyricsStatesList
+    global YTMD_server, LoginPass, lyricsRange, lyricsStatesList
     global running
     print(data)
-    createDebug()
     running = True
     
     YTMD_server = data['settings'][0]['IPv4 address']
     LoginPass = data['settings'][1]['Passcode']
-    if data['settings'][2]["beta"] == "True":
-        print("Beta is enabled")
-        isBeta = True
 
-    lyricsRange = data['settings'][3]['Lyrics Range']
+    lyricsRange = data['settings'][2]['Lyrics Range']
     lyricsRange = lyricsRange.split(",")
         #print(lyricsRange)
     print(list(range(int(lyricsRange[0]), int(lyricsRange[1]))))
@@ -331,7 +311,7 @@ def Actions(data):
             YTMD_Actions("start-playlist", data['data'][0]['value'])
         if data['actionId'] == "KillerBOSS.TouchPortal.Plugin.YTMD.Action.PlayURL":
             YTMD_Actions("play-url", data['data'][0]['value'])
-        if data['actionId'] == "KillerBOSS.TouchPortal.Plugin.YTMD.Action.SkiAd":
+        if data['actionId'] == "KillerBOSS.TouchPortal.Plugin.YTMD.Action.SkipAd":
             YTMD_Actions("skip-ad")
 
 @TPClient.on(TYPES.onConnectorChange)
