@@ -35,7 +35,7 @@ def YTMD_Actions(command,value=None, showdata=True):
         print(f'Running Command: {command} Value: {value} Status Code: {status.status}')
         writeServerData(f'Running Command: {command} Value: {value} Status Code: {status.status}')
 
-def openClose():
+def showHide():
     for x in range(0,2):
         keyboard.press(Key.media_play_pause)
         keyboard.release(Key.media_play_pause)
@@ -320,8 +320,8 @@ def Actions(data):
             YTMD_Actions("play-url", data['data'][0]['value'])
         if data['actionId'] == "KillerBOSS.TouchPortal.Plugin.YTMD.Action.SkipAd":
             YTMD_Actions("skip-ad")
-        if data['actionId'] == "KillerBOSS.TouchPortal.Plugin.YTMD.Action.Open/Close":
-            openClose()
+        if data['actionId'] == "KillerBOSS.TouchPortal.Plugin.YTMD.Action.Show/Hide":
+            showHide()
 
 @TPClient.on(TYPES.onConnectorChange)
 def connectorManager(data):

@@ -312,11 +312,11 @@
           "type": "communicate"
         },
         {
-            "id":"KillerBOSS.TouchPortal.Plugin.YTMD.Action.Open/Close",
-            "name":"YT Music App Open/Close",
+            "id":"KillerBOSS.TouchPortal.Plugin.YTMD.Action.Show/Hide",
+            "name":"YT Music App Show/Hide",
             "prefix":"YT Music",
             "type":"communicate",
-            "format":"Open/Close The App"
+            "format":"Show/Hide The App"
         }
       ],
       "events": [
