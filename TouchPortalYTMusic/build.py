@@ -67,7 +67,7 @@ PLUGIN_ICON = "icon.png"
 OUTPUT_PATH = r"./"
 
 """ PLUGIN_VERSION: A version string for the generated .tpp file name. This example reads the `__version__` from the example plugin's code. """
-PLUGIN_VERSION = "2.2.0"
+PLUGIN_VERSION = "2.2.1"
 
 # Or just set the PLUGIN_VERSION manually.
 # PLUGIN_VERSION = "1.0.0-beta1"

@@ -8,6 +8,7 @@ import urllib3
 from TouchPortalAPI import TYPES
 import requests
 from sys import exit
+from pynput.keyboard import Controller, Key
 
 YTMD_server = "localhost"
 LoginPass = None
@@ -17,6 +18,7 @@ statesData = ""
 http = urllib3.PoolManager(num_pools=10)
 isYTMDRunning = False
 running = False
+keyboard = Controller()
 
 def writeServerData(Serverinfo):
     currenttime = (strftime('[%I:%M:%S:%p] '))
@@ -32,6 +34,11 @@ def YTMD_Actions(command,value=None, showdata=True):
     if showdata:
         print(f'Running Command: {command} Value: {value} Status Code: {status.status}')
         writeServerData(f'Running Command: {command} Value: {value} Status Code: {status.status}')
+
+def openClose():
+    for x in range(0,2):
+        keyboard.press(Key.media_play_pause)
+        keyboard.release(Key.media_play_pause)
 
 TPClient = TouchPortalAPI.Client("YoutubeMusic")
 
@@ -313,6 +320,8 @@ def Actions(data):
             YTMD_Actions("play-url", data['data'][0]['value'])
         if data['actionId'] == "KillerBOSS.TouchPortal.Plugin.YTMD.Action.SkipAd":
             YTMD_Actions("skip-ad")
+        if data['actionId'] == "KillerBOSS.TouchPortal.Plugin.YTMD.Action.Open/Close":
+            openClose()
 
 @TPClient.on(TYPES.onConnectorChange)
 def connectorManager(data):
